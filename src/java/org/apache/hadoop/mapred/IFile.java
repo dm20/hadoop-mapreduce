@@ -424,7 +424,11 @@ public class IFile {
         return false;
       }
       if (keyBytes.length < currentKeyLength) {
-        keyBytes = new byte[currentKeyLength << 1];
+        if (currentKeyLength << 1 < 0) {
+           keyBytes = new byte[Integer.MAX_VALUE];
+        } else {
+           keyBytes = new byte[currentKeyLength << 1];
+        }
       }
       int i = readData(keyBytes, 0, currentKeyLength);
       if (i != currentKeyLength) {
